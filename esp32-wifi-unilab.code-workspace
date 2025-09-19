@@ -1,0 +1,20 @@
+{
+  "folders": [
+    { "name": "🌐 RepoRoot",   "path": "." },           // ← 新增
+    {
+      "name": "Node-A",
+      "path": "firmware/unilab_node_a"
+    },
+    {
+      "name": "Node-B", 
+      "path": "firmware/unilab_node_b"
+    }
+  ],
+  "settings": {
+    "idf.espIdfPath": "${env:IDF_PATH}",
+    "idf.toolsPath": "${env:IDF_TOOLS_PATH}",
+    // "idf.port": "COM10",          // 可留空，后面单独改
+    "idf.target": "esp32s3",
+    "hide-files.files": []
+  }
+}
