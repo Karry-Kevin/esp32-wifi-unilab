@@ -1,0 +1,5 @@
+title,body,labels,milestone
+"M1.1 创建仓库 README + CI 徽章","- 徽章：build / test / license<CR>- 规范 commit-msg 与 branch 保护规则","infra,priority:p0","M1-RepoSkeleton"
+"M1.2 添加 components/wifi_common 统一头文件","- 封装 esp_wifi 启动/停止宏<CR>- 统一事件回调签名","infra,priority:p0","M1-RepoSkeleton"
+"M1.3 创建 firmware 目录与 CMakeLists 模板","- 支持 idf.py 4.x & 5.x<CR>- 预置 sdkconfig.defaults","infra,priority:p0","M1-RepoSkeleton"
+"M1.4 Hello-World 固件编译通过","验收：本地 & CI 均生成 bin，体积 < 700 KB","infra,priority:p0","M1-RepoSkeleton"

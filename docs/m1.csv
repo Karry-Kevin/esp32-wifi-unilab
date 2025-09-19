@@ -1,0 +1,31 @@
+title,body,labels,milestone
+M1.1 创建仓库 README + CI 徽章,- 徽章：build / test / license<CR>- 规范 commit-msg 与 branch 保护规则,infra,M1-RepoSkeleton
+M1.2 添加 components/wifi_common 统一头文件,- 封装 esp_wifi 启动/停止宏<CR>- 统一事件回调签名,infra,M1-RepoSkeleton
+M1.3 创建 firmware 目录与 CMakeLists 模板,- 支持 idf.py 4.x & 5.x<CR>- 预置 sdkconfig.defaults,infra,M1-RepoSkeleton
+M1.4 Hello-World 固件编译通过,验收：本地 & CI 均生成 bin，体积 < 700 KB,infra,M1-RepoSkeleton
+M2.1 STA 连接路由器并记忆,- 使用 NVS 保存 SSID/PWD<CR>- 开机自动重连<CR>- 断网 30 s 后重连，蓝灯闪 3 次,"sta,reliability",M2-STA-Basic
+M2.2 断网重连策略,- 事件循环监听 DISCONNECTED<CR>- 重试间隔 10 s→30 s→60 s<CR>- 3 次失败后进入 SmartConfig,"sta,reliability",M2-STA-Basic
+M3.1 SmartConfig 空中配网,- 支持 ESP-Touch 协议<CR>- 手机小程序一键配网<CR>- 超时 90 s 后自动 fallback,provisioning,M3-SmartConfig
+M3.2 BluFi 蓝牙备选配网,- 广播 BLE 名称 UNILAB-XXXX<CR>- 通过 BLE 发 SSID/PWD<CR>- 配网成功后关闭 BLE,provisioning,M3-SmartConfig
+M4.1 SoftAP  Fallback,- 60 s 未连路由则启动 AP<CR>- SSID=UNILAB_xxxx<CR>- DHCP 池 192.168.4.0/24,"ap,dns",M4-AP-CaptivePortal
+M4.2 DNS 劫持 captive portal,- 所有 DNS 返回 192.168.4.1<CR>- 弹出网页表单输入路由 SSID/PWD<CR>- 成功后重启,"ap,dns",M4-AP-CaptivePortal
+M5.1 深度睡眠 30 s 周期,- ESP32 定时器唤醒<CR>- 采集传感器→发 MQTT→睡 30 s<CR>- 平均电流 < 100 μA,low-power,M5-PowerSave
+M5.2 RTC memory 保活序号,- 记录已发送序号<CR>- 防止 DeepSleep 重启丢包<CR>- 掉电不丢,low-power,M5-PowerSave
+M6.1 HTTPS 下载签名固件,- 使用 ESP-IDF https_ota<CR>- 校验 ECDSA 签名<CR>- 失败自动回滚,"ota,security",M6-OTA-HTTPS
+M6.2 升级进度上报 MQTT,- 下载百分比每 10 % 上报<CR>- 升级成功/失败均发 Last-Will<CR>- 支持手动触发,"ota,security",M6-OTA-HTTPS
+M7.1 双向 TLS 连接 Broker,- 证书链校验<CR>- 支持 TLS1.3<CR>- 硬件加速 mbedTLS,"tls,mqtt",M7-TLS-MQTT
+M7.2 QoS1 + Last-Will,- 发布主题 unilab/a/sensors<CR>- 订阅 unilab/a/cmd/#<CR>- 掉线发遗嘱消息,"tls,mqtt",M7-TLS-MQTT
+M8.1 混杂模式抓包,- 远程指令进入 sniffer<CR>- 抓取 Beacon/ProbeReq<CR>- 1 min 后自动退出,sniffer,M8-Sniffer-PCAP
+M8.2 UDP 实时 PCAP 流,- 通过 UDP 5000 端口吐 PCAP<CR>- Wireshark 可实时解码<CR>- 保存文件到 PC,sniffer,M8-Sniffer-PCAP
+M9.1 Node B 启动 AP + NAT,- 网段 192.168.4.0/24<CR>- 启用 IP 转发+NAT<CR>- 统计各 STA 流量,"ap,nat",M9-NodeB-AP-NAT
+M9.2 流量统计 API,"- REST 接口 /api/traffic<CR>- 返回 JSON{mac,rx,tx}<CR>- 每 10 s 更新","ap,nat",M9-NodeB-AP-NAT
+M10.1 Mesh 自组网,- 最多 10 叶子节点<CR>- 父节点丢失 5 s 内重选<CR>- 零配置加入,mesh,M10-Mesh-Root
+M10.2 Mesh 自愈监控,#NAME?,mesh,M10-Mesh-Root
+M11.1 Mosquitto 8883 & WS,- 端口 8883 TLS<CR>- 端口 9001 WebSocket<CR>- 支持 IPv4/6,"mqtt,security",M11-NodeB-Broker
+M11.2 ACL 隔离,- Node A 只能 pub/sub unilab/a/#<CR>- Node B 可读写全局<CR>- 网页管理用户,"mqtt,security",M11-NodeB-Broker
+M12.1 RESTful API,- /api/wifi_scan<CR>- /api/ota<CR>- /api/mesh_info<CR>- 纯 JSON 返回,"http,websocket",M12-REST-WS
+M12.2 WebSocket 实时日志,- 路径 /ws/log<CR>- 浏览器实时刷日志<CR>- 支持 RSSI 曲线图,"http,websocket",M12-REST-WS
+M13.1 pytest 端到端,- 自动烧录、配网、OTA、重连<CR>- 生成 Allure 报告<CR>- 失败截图,"ci,qa",M13-AutoTest-CI
+M13.2 GitHub Actions 每夜回归,- 每晚 02:00 触发<CR>- 并行跑 A/B 双机<CR>- 报告发邮件,"ci,qa",M13-AutoTest-CI
+M14.1 14 篇模块指南,- 每 Milestone 一篇 .md<CR>- PlantUML 时序图<CR>- 常见错误码对照,doc,M14-Doc-Handbook
+M14.2 汇总 PDF & Release,- 合并成《ESP32-WiFi-全景手册》<CR>- 随 Release 发布<CR>- 提供下载链接,doc,M14-Doc-Handbook
